@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
-import './Title';
-import stud from './IMG_0095.jpeg';
+import stud from './assets/logo128.png';
 
 
 
@@ -10,8 +9,7 @@ const App: React.FC = () => {
   return (
 
     <div className="app-container">
-      <img src={stud} alt="STUD Logo" />
-      <div className="rounded-box"><h1>STUD</h1></div>
+      <div className="rounded-box"><img src={stud} alt="STUD Logo" /><h1>STUD6</h1></div>
     </div>
   );
 };
