@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import './Title.tsx';
+import './Title';
 import stud from './IMG_0095.jpeg';
 
 
