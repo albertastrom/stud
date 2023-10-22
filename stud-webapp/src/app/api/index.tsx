@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check the request method
   if (req.method !== 'POST') {
@@ -8,18 +9,44 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // Parse the request body
-  const { data_request } = req.body;
+  const { apiKey, data_request, links } = req.body;
+
+  // Check the apiKey
+  // TODO: Add your logic here to verify the apiKey against your database or any other source.
+  if (apiKey !== "EXPECTED_API_KEY") { // Replace with your validation logic.
+    res.status(401).json({ message: 'Invalid API key.' });
+    return;
+  }
 
   // Handle the "data_request" value
-  if (data_request === "send_data_back") {
-    // Add logic here to fetch or compute the data you want to send back
-    const data = {
-      message: "Here's your data!"
-      // ... add any other data you want to send back
-    };
-    res.status(200).json(data);
+  if (data_request === "add_data") {
+    // Convert links object into a list
+    const linksList = Object.keys(links).map(key => {
+      return {
+        id: key,
+        ...links[key]
+      };
+    });
+
+    // TODO: Add your logic here to process or store the linksList, e.g., save it into a database
+    res.status(200).json({ message: 'Data added successfully!', linksList });
+  } else if (data_request === "status") {
+    // Retrieve status from the database based on the apiKey
+    // TODO: Fetch the status from the database here.
+
+    // Example:
+    // const status = await database.getStatus(apiKey);
+    const status = "Example Status"; // Replace this with the actual status from the database.
+
+    // firestore returns time
+    async function getTime() {
+        
+
+    }
+
+    const endTimeISO = new Date().toISOString(); // Replace this with the actual end time from the database.
+    res.status(200).json({ status, endTime: endTimeISO });
   } else {
-    // If there's no need to send data back, simply respond with a success message (or any other desired action)
     res.status(200).json({ message: 'Request received!' });
   }
 }

@@ -29,10 +29,10 @@ getKey();
 chrome.tabs.onCreated.addListener(function(tab) {
     // Code to run when a new tab is opened
     // console.log("Started");
-    // if (inSession === "false")
-    // {
-    //     inSession = "true";
-    // }
+    if (inSession === "false")
+    {
+        inSession = "true";
+    }
     // requestStatusFromAPI(apiKey);
 
     // You can replace this with your own logic or function
@@ -129,6 +129,7 @@ setInterval(() => {
         console.log(tabDetails);
         currentTime = new Date();
         console.log(endTime.getTime() - currentTime.getTime());
+        printJson();
     }
     
     if (activeTabId && inSession === "true") {
@@ -157,6 +158,15 @@ setInterval(() => {
     }
 }, 1000);
 
+function printJson() {
+    const requestData = 
+    {
+        apiKey: apiKey,
+        data_request: "add_data",
+        links: tabDetails
+    }
+    console.log(JSON.stringify(requestData));
+};
 
 
 async function sendDataToAPI(apiKey, items) {
