@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { auth, db } from "../firebase";
-import { collection, query, addDoc, getDoc, doc } from "firebase/firestore";
+import { collection, query, addDoc, getDoc, doc, where, getDocs } from "firebase/firestore";
 
 import Navbar from "../components/Navbar";
 import { User } from "firebase/auth";
@@ -21,24 +21,25 @@ export default function Dashboard() {
       await auth.onAuthStateChanged(function(check_user) {
         if (check_user) {
           setAuthUser(check_user);
-          setLoading(false);
         } else {
           router.push('/');
         }
       });
 
       if (authUser) {
-        const userObj = await getDoc(doc(db, 'users', authUser.uid));
+        const userQuery = await query(collection(db, 'users'), where('uid', '==', authUser.uid));
+        const userObj = (await getDocs(userQuery)).docs[0];
 
         if (userObj === undefined) {
-          await addDoc(collection(db, 'users'), {uid: authUser.uid, apiKey: authUser.uid});
+          setUser(await addDoc(collection(db, 'users'), {uid: authUser.uid, apiKey: authUser.uid.substring(0, 6).toUpperCase()}));
         } else {
           setUser(userObj);
         }
       }
-    };
 
-    const query_sessions = query(collection(db, 'study_sessions'));
+
+      setLoading(false);
+    };
 
     checkAuthentication();
   }, [router, authUser]);
@@ -46,6 +47,7 @@ export default function Dashboard() {
   const page = !loading ? (
   <div className="h-screen flex flex-col justify-center align-middle">
     <Navbar />
+    <h1 className="ml-2 font-bold">API Key: {user?.get('apiKey')}</h1>
     <HistoryTable user={authUser} />
   </div>
   ) : <>Loading...</>

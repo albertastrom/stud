@@ -4,13 +4,17 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useRouter } from "next/navigation";
 import { User } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 
 const ON_TIME = 5; // prod: 15 mins for "on" time
 const OFF_TIME = 2; // prod: 5 mins for "off" time
 
 export default function SessionPage() {
-  const [secondsLeft, setSecondsLeft] = useState<number>(ON_TIME);
+  const [currentState, setCurrentState] = useState<any>();
+  let isBreak = false;
+
+  const [secondsLeft, setSecondsLeft] = useState<number>(1000);
   const [isPaused, setIsPaused] = useState(false);
   const [buttonsVisible, setButtonsVisible] = useState(false);
   const [timerColor, setTimerColor] = useState<string>("text-blue-500");
@@ -20,6 +24,31 @@ export default function SessionPage() {
   const router = useRouter();
 
   useEffect(() => {
+    let ignore = false;
+
+    if (!ignore) {
+      const getHistory = async () => {
+        const userObj = await getDoc(doc(db, 'users', user ? user.uid : ''));
+        const sessionsQuery = await query(collection(db, 'study_sessions'), where("uid", "==", userObj.id), where('active', '==', true));
+        const sessionObjs = await getDocs(sessionsQuery);
+        const sessionObj = sessionObjs.docs[0];
+        const c_state = await getDoc(doc(db, 'check_ins', sessionObj.get('current_state')));
+        const b_state = await getDoc(doc(db, 'breaks', sessionObj.get('current_state')));
+    
+        console.log(c_state)
+        console.log(b_state)
+
+        if (c_state) {
+          setCurrentState(c_state);
+          isBreak = false;
+        } else if (b_state) {
+          setCurrentState(b_state);
+          isBreak = true;
+        }
+      }
+      getHistory();
+    }
+
     const checkAuthentication = async () => {
       await auth.onAuthStateChanged(function (check_user) {
         if (check_user) {
@@ -46,7 +75,12 @@ export default function SessionPage() {
       setSecondsLeft((prevSeconds) => Math.max(prevSeconds - 1, 0));
     }, 1000);
 
+
+    setTimeout(() => {
+      setLoading(false)
+    }, 500);
     return () => {
+      ignore = true;
       clearInterval(interval);
     };
   }, [secondsLeft, router, isPaused]);
@@ -61,10 +95,18 @@ export default function SessionPage() {
 
   const continueClick = () => {
     setButtonAnimation("opacity-0 scale-125");
-    playSound("sounds/continueClick.mp3");
+    playSound("session/sounds/continueClick.mp3");
+    setCurrentState({
+      uid: currentState.get('uid'),
+      start_time: currentState.get('start_time'),
+      duration: currentState.get('duration'),
+      end_time: Date.now() + ON_TIME,
+      isDone: false,
+      isPaused: false
+    });
     setTimeout(() => {
       setButtonsVisible(false);
-      setSecondsLeft(ON_TIME);
+      setSecondsLeft(currentState.get('end_time') - currentState.get('start_time'));
       setTimerColor("text-blue-500");
       setButtonAnimation("");
     }, 500);
@@ -72,7 +114,15 @@ export default function SessionPage() {
 
   const breakClick = () => {
     setButtonAnimation("opacity-0 scale-125");
-    playSound("sounds/breakClick.mp3");
+    playSound("session/sounds/breakClick.mp3");
+    setCurrentState({
+      uid: currentState.get('uid'),
+      start_time: currentState.get('start_time'),
+      duration: currentState.get('duration'),
+      end_time: Date.now() + ON_TIME,
+      isDone: false,
+      isPaused: false
+    });
     setTimeout(() => {
       setButtonsVisible(false);
       setSecondsLeft(OFF_TIME);
