@@ -78,11 +78,9 @@ export default function Home() {
               <div className="max-w-3xl mx-auto">
                 <p className="text-xl text-gray-600 mb-8" data-aos="zoom-y-out" data-aos-delay="150">Make studying easy, fun, and trackable.</p>
                 <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
-                  <ul className="flex w-full justify-center">
-                    <li onClick={handleSignIn} className="p-2 cursor-pointer text-white bg-gradient-to-r from-blue-500 to-blue-500 hover:to-teal-400 mb-4 rounded-md">
+                    <button onClick={handleSignIn} className="p-2 cursor-pointer text-3xl text-white bg-gradient-to-r from-blue-500 to-blue-500 hover:to-teal-400 m-4 rounded-3xl w-32 h-16">
                       Start
-                    </li>
-                  </ul>
+                    </button>
                 </div>
               </div>
             </div>
