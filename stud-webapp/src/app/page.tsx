@@ -66,7 +66,7 @@ export default function Home() {
             <div className="text-center pb-12 md:pb-16">
               <Link href="/" className="p-0">
                 <Image 
-                  src="/stud_logo.png"
+                  src="/stud_logo1.png"
                   alt="Stud Logo"
                   className='dark:invert'
                   width={100}

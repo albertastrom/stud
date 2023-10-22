@@ -88,11 +88,11 @@ export default function SessionPage() {
   };
 
   const page = !loading ? (
-    <div className="bg-gradient-to-r from-sky-200 h-screen flex flex-col justify-center items-center overflow-hidden">
-      <Navbar given_user={user} />
+    <div className="h-screen flex flex-col justify-center items-center overflow-hidden">
+      <Navbar />
       <span
         onClick={togglePause}
-        className={`${timerColor} transition-all duration-500 ${
+        className={`${timerColor} h-full relative z-0 transition-all duration-500 ${
           isTimerExpired
             ? "opacity-0 transform scale-125"
             : "opacity-20 hover:opacity-40"

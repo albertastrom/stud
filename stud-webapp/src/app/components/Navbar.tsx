@@ -1,12 +1,7 @@
-'use client'
-
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  signOut,
-  User,
-} from "firebase/auth";
+import { signOut } from "firebase/auth";
 
 import { auth } from "../firebase";
 import SetupModal from "./setup";
@@ -15,7 +10,7 @@ const logOut = () => {
   signOut(auth);
 };
 
-const Navbar = ({given_user}: {given_user: User | undefined}) => {
+const Navbar = () => {
   const handleSignOut = async () => {
     try {
       await logOut();
@@ -30,11 +25,11 @@ const Navbar = ({given_user}: {given_user: User | undefined}) => {
         <li className="p-2 cursor-pointer">
           <Link href="/dashboard" className="p-0">
             <Image 
-              src="/stud_logo.png"
+              src="/stud_logo1.png"
               alt="Stud Logo"
+              className='dark:invert'
               width={100}
               height={100}
-              className='dark:invert'
               priority 
               />
           </Link>

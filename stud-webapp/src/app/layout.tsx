@@ -20,7 +20,7 @@ export default function RootLayout({
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0" />
       </Head>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-gradient-to-r from-sky-200 `}>
         <div className='flex flex-col min-h-screen'>
           {children}
         </div>
