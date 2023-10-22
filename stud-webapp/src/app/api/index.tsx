@@ -1,4 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { User } from "firebase/auth";
+import { auth } from "../firebase";
+import { collection, query, addDoc, getDoc, doc, where} from "firebase/firestore";
+import {db} from "../firebase";
+
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -13,7 +18,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // Check the apiKey
   // TODO: Add your logic here to verify the apiKey against your database or any other source.
-  if (apiKey !== "EXPECTED_API_KEY") { // Replace with your validation logic.
+  const EXPECTED_API_KEY = "KEY" 
+  if (apiKey !== EXPECTED_API_KEY) { // Replace with your validation logic.
     res.status(401).json({ message: 'Invalid API key.' });
     return;
   }
@@ -38,11 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // const status = await database.getStatus(apiKey);
     const status = "Example Status"; // Replace this with the actual status from the database.
 
-    // firestore returns time
-    async function getTime() {
-        
-
-    }
+    
 
     const endTimeISO = new Date().toISOString(); // Replace this with the actual end time from the database.
     res.status(200).json({ status, endTime: endTimeISO });
