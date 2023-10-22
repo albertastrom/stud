@@ -24,11 +24,11 @@ const Navbar = () => {
         <li className="p-2 cursor-pointer">
           <Link href="/dashboard" className="p-0">
             <Image 
-              src="/stud_logo.png"
+              src="/stud_logo1.png"
               alt="Stud Logo"
+              className='dark:invert'
               width={100}
               height={100}
-              className='dark:invert'
               priority 
               />
           </Link>
