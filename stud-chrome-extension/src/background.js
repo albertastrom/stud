@@ -5,11 +5,11 @@ let tabDetails = {};
 // when active tab changes
 chrome.tabs.onActivated.addListener(activeInfo => {
     activeTabId = activeInfo.tabId;
-    let currentTab = chrome.tabs.get(activeTabId)
-    // Instance a new tab in tabDetails list if it doesn't exist
-    if (!tabDetails[activeTabId]) {
-        tabDetails[activeTabId] = { time: 0, url: currentTab.pendingUrl, title: currentTab.title };
-    }
+    chrome.tabs.get(activeTabId, currentTab => {
+        if (!tabDetails[activeTabId]) {
+            tabDetails[activeTabId] = { time: 0, url: currentTab.pendingUrl || currentTab.url, title: currentTab.title };
+        }
+    });
 });
 
 // set activeTabId for each window
@@ -21,11 +21,12 @@ chrome.windows.onFocusChanged.addListener(windowId => {
     // first tab from that list and assign it to activeTabId
     } else {
         chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-        activeTabId = tabs[0].id;
-        let currentTab = chrome.tabs.get(activeTabId)
-        if (!tabDetails[activeTabId]) {
-            tabDetails[activeTabId] = { time: 0, url: currentTab.pendingUrl, title: currentTab.title };
-        }
+            activeTabId = tabs[0].id;
+            chrome.tabs.get(activeTabId, currentTab => {
+                if (!tabDetails[activeTabId]) {
+                    tabDetails[activeTabId] = { time: 0, url: currentTab.pendingUrl || currentTab.url, title: currentTab.title };
+                }
+            });
         });
     }
 });
