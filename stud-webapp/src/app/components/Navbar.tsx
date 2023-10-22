@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../firebase";
+import SetupModal from "./setup";
 
 const logOut = () => {
   signOut(auth);
@@ -39,7 +40,7 @@ const Navbar = ({given_user}: {given_user: User | undefined}) => {
           </Link>
         </li>
       </ul>
-
+      <SetupModal />
       <div className="flex flex-row justify-between w-full ml-5 mr-5 font-bold">
         <p></p>
         <p className="cursor-pointer" onClick={handleSignOut}>
