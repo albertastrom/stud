@@ -34,6 +34,9 @@ export default function HistoryTable({ user } : { user: User | undefined }) {
     <div className="w-full flex justify-center">
       <Modal user={user} />
     </div>
+
+    <></>
+
     <div className="w-full flex justify-center">
       <h1 className="text-3xl font-bold">🕰️ Study History</h1>
     </div>

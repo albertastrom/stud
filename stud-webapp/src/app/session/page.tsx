@@ -14,7 +14,7 @@ export default function SessionPage() {
   const [currentState, setCurrentState] = useState<any>();
   let isBreak = false;
 
-  const [secondsLeft, setSecondsLeft] = useState<number>(1000);
+  const [secondsLeft, setSecondsLeft] = useState<number>(10);
   const [isPaused, setIsPaused] = useState(false);
   const [buttonsVisible, setButtonsVisible] = useState(false);
   const [timerColor, setTimerColor] = useState<string>("text-blue-500");
@@ -96,17 +96,17 @@ export default function SessionPage() {
   const continueClick = () => {
     setButtonAnimation("opacity-0 scale-125");
     playSound("session/sounds/continueClick.mp3");
-    setCurrentState({
-      uid: currentState.get('uid'),
-      start_time: currentState.get('start_time'),
-      duration: currentState.get('duration'),
-      end_time: Date.now() + ON_TIME,
-      isDone: false,
-      isPaused: false
-    });
+    // setCurrentState({
+    //   uid: currentState.get('uid'),
+    //   start_time: currentState.get('start_time'),
+    //   duration: currentState.get('duration'),
+    //   end_time: Date.now() + ON_TIME,
+    //   isDone: false,
+    //   isPaused: false
+    // });
     setTimeout(() => {
       setButtonsVisible(false);
-      setSecondsLeft(currentState.get('end_time') - currentState.get('start_time'));
+      setSecondsLeft(ON_TIME);
       setTimerColor("text-blue-500");
       setButtonAnimation("");
     }, 500);
@@ -115,14 +115,14 @@ export default function SessionPage() {
   const breakClick = () => {
     setButtonAnimation("opacity-0 scale-125");
     playSound("session/sounds/breakClick.mp3");
-    setCurrentState({
-      uid: currentState.get('uid'),
-      start_time: currentState.get('start_time'),
-      duration: currentState.get('duration'),
-      end_time: Date.now() + ON_TIME,
-      isDone: false,
-      isPaused: false
-    });
+    // setCurrentState({
+    //   uid: currentState.get('uid'),
+    //   start_time: currentState.get('start_time'),
+    //   duration: currentState.get('duration'),
+    //   end_time: Date.now() + ON_TIME,
+    //   isDone: false,
+    //   isPaused: false
+    // });
     setTimeout(() => {
       setButtonsVisible(false);
       setSecondsLeft(OFF_TIME);
