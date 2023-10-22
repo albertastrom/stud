@@ -11,6 +11,7 @@ const OFF_TIME = 2; // prod: 5 mins for "off" time
 
 export default function SessionPage() {
   const [secondsLeft, setSecondsLeft] = useState<number>(ON_TIME);
+  const [isPaused, setIsPaused] = useState(false);
   const [buttonsVisible, setButtonsVisible] = useState(false);
   const [timerColor, setTimerColor] = useState<string>("text-blue-500");
   const [buttonAnimation, setButtonAnimation] = useState("");
@@ -31,6 +32,10 @@ export default function SessionPage() {
     };
     checkAuthentication();
 
+    if (isPaused) {
+      return;
+    }
+    
     if (secondsLeft <= 0) {
       setButtonsVisible(true);
       playSound("sounds/timerEnd.mp3");
@@ -44,10 +49,15 @@ export default function SessionPage() {
     return () => {
       clearInterval(interval);
     };
-  }, [secondsLeft, router]);
+  }, [secondsLeft, router, isPaused]);
 
   const formattedTime = formatTime(secondsLeft);
   const isTimerExpired = secondsLeft === 0;
+  const togglePause = () => {
+    if (secondsLeft > 0) {
+      setIsPaused(!isPaused);
+    }
+  };
 
   const continueClick = () => {
     setButtonAnimation("opacity-0 scale-125");
@@ -81,11 +91,12 @@ export default function SessionPage() {
     <div className="bg-gradient-to-r from-sky-200 h-screen flex flex-col justify-center items-center overflow-hidden">
       <Navbar given_user={user} />
       <span
-        className={`${timerColor} h-full transition-all duration-500 ${
+        onClick={togglePause}
+        className={`${timerColor} transition-all duration-500 ${
           isTimerExpired
             ? "opacity-0 transform scale-125"
             : "opacity-20 hover:opacity-40"
-        } text-[300px] font-bold font-mono text-center mb-12`}
+        } text-[300px] font-bold font-mono text-center mb-12 cursor-pointer select-none`}
       >
         {formattedTime}
       </span>
