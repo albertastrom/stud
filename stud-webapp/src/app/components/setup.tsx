@@ -15,7 +15,7 @@ function DownloadButton() {
         document.body.appendChild(element); // Required for this to work in FireFox
         element.click();
     }
-    return <button id="downloadButton" onClick={downloadTxtFile} value="download" className="p-2 cursor-pointer text-white text-3xl bg-blue-600 w-52 h-24 hover:bg-blue-700 mb-4 rounded-3xl">Download</button>
+    return <button id="downloadButton" onClick={downloadTxtFile} value="download" className="p-2 cursor-pointer text-3xl text-white bg-gradient-to-r from-blue-500 to-blue-500 hover:to-teal-400 m-4 rounded-3xl w-52 h-24">Download</button>
 }
 
 const SetupModal = () => {
@@ -38,7 +38,7 @@ const SetupModal = () => {
    }
    return (
       <div>
-         <button onClick={() => setIsOpen(true)}>Add Chrome Extension</button>
+         <button onClick={() => setIsOpen(true)} className="p-2 cursor-pointer text-white bg-gradient-to-r from-blue-500 to-blue-500 hover:to-teal-400 m-4 rounded-xl">Add Chrome Extension</button>
          <Modal isOpen={isOpen} onRequestClose={() => setIsOpen(false)} style={customStyles}>
             <div className="space-y-4">
                 <h1 className="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4 grid place-content-center mt-8" data-aos="zoom-y-out">Set up Chrome Extension</h1>
@@ -52,10 +52,10 @@ const SetupModal = () => {
                         </h3>
                         <ul role="list" className="marker:text-gray-600 list-disc pl-5 space-y-1 text-gray-600">
                             <li>
-                                Activeehrbficrhoaiuerhcaiuhcpaowcoaw
+                                Description.
                             </li>
                             <li>
-                                avcercoieuhcrpaowuhcpoweij;aouwhcliauhlia3ucliaunliu
+                                Some more description.
                             </li>
                         </ul>
                     </div>
