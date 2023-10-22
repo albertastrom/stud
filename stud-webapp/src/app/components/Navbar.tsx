@@ -1,12 +1,7 @@
-'use client'
-
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  signOut,
-  User,
-} from "firebase/auth";
+import { signOut } from "firebase/auth";
 
 import { auth } from "../firebase";
 
@@ -14,7 +9,7 @@ const logOut = () => {
   signOut(auth);
 };
 
-const Navbar = ({given_user}: {given_user: User | undefined}) => {
+const Navbar = () => {
   const handleSignOut = async () => {
     try {
       await logOut();

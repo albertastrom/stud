@@ -8,6 +8,7 @@ import { collection, query, addDoc } from "firebase/firestore";
 import Navbar from "../components/Navbar";
 import { User } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import HistoryTable from "./table";
 
 export default function Dashboard() {
   const [user, setUser] = useState<User | undefined>();
@@ -73,7 +74,8 @@ export default function Dashboard() {
 
   const page = !loading ? (
   <div className="h-screen flex flex-col justify-center align-middle">
-    <Navbar given_user={user} />
+    <Navbar />
+    <HistoryTable />
   </div>
   ) : <>Loading...</>
 
