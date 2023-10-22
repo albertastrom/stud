@@ -4,6 +4,7 @@ import Image from "next/image";
 import { signOut } from "firebase/auth";
 
 import { auth } from "../firebase";
+import SetupModal from "./setup";
 
 const logOut = () => {
   signOut(auth);
@@ -34,7 +35,7 @@ const Navbar = () => {
           </Link>
         </li>
       </ul>
-
+      <SetupModal />
       <div className="flex flex-row justify-between w-full ml-5 mr-5 font-bold">
         <p></p>
         <p className="cursor-pointer" onClick={handleSignOut}>
