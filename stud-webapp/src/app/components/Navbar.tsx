@@ -1,13 +1,12 @@
 'use client'
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
   signOut,
   User,
 } from "firebase/auth";
-import { useRouter } from "next/navigation";
 
 import { auth } from "../firebase";
 
@@ -16,8 +15,6 @@ const logOut = () => {
 };
 
 const Navbar = ({given_user}: {given_user: User | undefined}) => {
-  const [user, setUser] = useState<User | undefined>(given_user);
-
   const handleSignOut = async () => {
     try {
       await logOut();
@@ -44,7 +41,7 @@ const Navbar = ({given_user}: {given_user: User | undefined}) => {
       </ul>
 
       <div className="flex flex-row justify-between w-full ml-5 mr-5 font-bold">
-        <p>Welcome, {user?.displayName}</p>
+        <p></p>
         <p className="cursor-pointer" onClick={handleSignOut}>
           Sign out
         </p>
