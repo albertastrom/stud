@@ -6,8 +6,11 @@ import { useRouter } from "next/navigation";
 import { User } from "firebase/auth";
 import { auth } from "../firebase";
 
+const ON_TIME = 5; // prod: 15 mins for "on" time
+const OFF_TIME = 2; // prod: 5 mins for "off" time
+
 export default function SessionPage() {
-  const [secondsLeft, setSecondsLeft] = useState<number>(15);
+  const [secondsLeft, setSecondsLeft] = useState<number>(ON_TIME);
   const [buttonsVisible, setButtonsVisible] = useState(false);
   const [timerColor, setTimerColor] = useState<string>("text-blue-500");
   const [buttonAnimation, setButtonAnimation] = useState("");
@@ -30,7 +33,7 @@ export default function SessionPage() {
 
     if (secondsLeft <= 0) {
       setButtonsVisible(true);
-      playSound("/timerEnd.mp3");
+      playSound("sounds/timerEnd.mp3");
       return;
     }
 
@@ -48,10 +51,10 @@ export default function SessionPage() {
 
   const continueClick = () => {
     setButtonAnimation("opacity-0 scale-125");
-    playSound("/continueClick.mp3");
+    playSound("sounds/continueClick.mp3");
     setTimeout(() => {
       setButtonsVisible(false);
-      setSecondsLeft(15);
+      setSecondsLeft(ON_TIME);
       setTimerColor("text-blue-500");
       setButtonAnimation("");
     }, 500);
@@ -59,15 +62,16 @@ export default function SessionPage() {
 
   const breakClick = () => {
     setButtonAnimation("opacity-0 scale-125");
-    playSound("/breakClick.mp3");
+    playSound("sounds/breakClick.mp3");
     setTimeout(() => {
       setButtonsVisible(false);
-      setSecondsLeft(5);
+      setSecondsLeft(OFF_TIME);
       setTimerColor("text-orange-400");
       setButtonAnimation("");
     }, 500);
   };
 
+  // sound from Zapsplat.com
   const playSound = (src: string) => {
     const audio = new Audio(src);
     audio.play();
