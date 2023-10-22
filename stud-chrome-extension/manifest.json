@@ -1,13 +1,49 @@
 {
-  "manifest_version": 3,
-  "name": "stud",
-  "description": "Your Personal Study Buddy",
+  "name": "Stud",
+  "description": "Study buddy!",
   "version": "1.0",
+  "manifest_version": 3,
+  "content_scripts": [
+      {
+          "matches": [
+              "<all_urls>"
+          ],
+          "js": [
+              "src/contentscript.js"
+          ],
+          "run_at": "document_end"
+      }
+  ],
+  "icons": {
+      "128": "/src/icons/icon_128.png"
+  },
   "action": {
-    "default_popup": "src/popup.html"
+      
+      "default_popup": "src/popup.html",
+      "default_icon": {
+          "128": "/src/icons/icon_128.png"
+      }
   },
+  "options_page": "src/options.html",
+  "permissions": [
+      "storage",
+      "scripting",
+      "activeTab",
+      "scripting",
+      "tabs"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "src/slidebox.css" ],
+      "matches": ["<all_urls>"]
+    }
+    
+  ],
   "background": {
-    "service_worker": "src/background.js"
+      "service_worker": "src/background.js"
+
   },
-  "permissions": ["activeTab", "tabs"]
+  "host_permissions": [
+      "<all_urls>"
+  ]
 }

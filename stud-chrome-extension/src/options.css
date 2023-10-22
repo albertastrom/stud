@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=Inter');
+
+body {
+    font-family: Inter, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #3b82f6, rgb(186, 230, 253));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    margin-bottom: 0px;
+}
+
+.logo img {
+    border-radius: 10px; /* Slightly rounded logo for consistency */
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 0px;
+    /* bold */
+    font-weight: 1400;
+}
+
+p {
+    color: #444242;
+    text-align: center;
+}
+
+form {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+input[type="text"], input[type="submit"] {
+    width: 100%;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #3b82f6;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+}
+
+input[type="submit"]:hover {
+    background-color: #6f8dc9;
+}
+
+#capsule {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 25px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+#codeKey {
+    font-family: Menlo, monospace;
+    font-weight: bold;
+    color: #333;
+    font-size: 25px;
+}
+
