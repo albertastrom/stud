@@ -2,9 +2,10 @@
 
 import React, { ChangeEvent, useState } from "react";
 import { db } from "../firebase";
-import { collection, addDoc, query, getDoc, doc } from "firebase/firestore";
+import { collection, addDoc, query, getDoc, doc, FieldValue } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { User } from "firebase/auth";
+import { FieldPath } from "firebase/firestore/lite";
 
 type InputValue = {
     task_name: string;
@@ -50,17 +51,30 @@ export default function Modal({ user } : { user: User | undefined }) {
     const router = useRouter();
     
     const addSession = async () => {
-        console.log(user?.uid);
-
         const userObj = await getDoc(doc(db, 'users', user ? user.uid : ''));
 
         setNewSession({
-          uid: user ? userObj.id : '',
-          current_state: newSession.current_state,
-          active: newSession.active,
+            uid: user ? userObj.id : '',
+            current_state: newSession.current_state,
+            active: newSession.active,
         });
 
         if (newSession.uid !== '') {
+            const checkin = await addDoc(collection(db, 'check_ins'), {
+                duration: 0,
+                start_time: Date.now(),
+                end_time: Date.now() + 15000,
+                isDone: false,
+                isPaused: false,
+                uid: newSession.uid,
+            });
+
+            setNewSession({
+                uid: newSession.uid,
+                current_state: checkin.id,
+                active: newSession.active,
+            });
+            
             const session = await addDoc(collection(db, 'study_sessions'), newSession);
             inputValues.map(async (value, index) => {
                 if (index !== inputValues.length - 1) {
