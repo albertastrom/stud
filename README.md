@@ -1,7 +1,7 @@
-# stud: The Study Buddy
+# stud <img src="stud_logo.png" alt="logo" width="40"/>
 
 ## Introduction
-Enhance your study efficiency with **stud**, a web-app and Chrome extension designed for optimal focus and time management.
+Enhance your study efficiency with your new study buddy **stud**, a web-app and Chrome extension designed for optimal focus and time management.
 
 ## Technologies
 - **Front-End**: Developed with Next.js, utilizing the React framework for a responsive UI, and styled with Tailwind CSS for a modern, utility-first interface.
